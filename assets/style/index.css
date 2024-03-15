@@ -52,7 +52,7 @@ body {
 }
 
 .img-fluid {
-    max-width: 100%;
+    width: 100%; /* Bild auf 100% Breite strecken */
     height: auto;
 }
 
