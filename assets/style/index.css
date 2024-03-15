@@ -9,12 +9,13 @@ body {
 }
 
 * {
-    width: 100%;
+    box-sizing: border-box; /* sicherstellen, dass padding und border in die Breite einbezogen werden */
 }
 
 .navbar {
     background-color: #333;
-    padding: 10px;
+    width: 100%; /* volle Breite */
+    padding: 10px 0; /* Padding für oben/unten beibehalten, aber seitliches Padding entfernen */
     margin-bottom: 20px;
 }
 
@@ -47,6 +48,7 @@ body {
 .container {
     position: relative;
     width: 100%;
+    max-width: none; /* Maximalbreite aufheben */
 }
 
 .img-fluid {
@@ -69,6 +71,7 @@ body {
 .empty-block, .filled-block {
     width: 100%;
     padding: 20px;
+    box-sizing: border-box; /* sicherstellen, dass padding in die Breite einbezogen wird */
 }
 
 @media (min-width: 576px) {
