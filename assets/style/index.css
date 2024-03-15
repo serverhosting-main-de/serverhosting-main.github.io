@@ -49,6 +49,23 @@ body {
     object-fit: cover;
   }
   
+  .image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .info-text {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    padding: 10px;
+  }
+  
   .empty-block {
     height: 100px; /* Höhe des leeren Blocks festlegen */
   }
