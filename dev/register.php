@@ -38,20 +38,20 @@
         <?php endif; ?>
         <form action="register.php" method="post">
             <div class="form-group">
-                <label>Benutzername</label>
-                <input type="text" name="username" class="form-control">
+                <label for="username">Benutzername</label>
+                <input type="text" id="username" name="username" class="form-control">
             </div>
             <div class="form-group">
-                <label>Email</label>
-                <input type="email" name="email" class="form-control">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" class="form-control">
             </div>
             <div class="form-group">
-                <label>Passwort</label>
-                <input type="password" name="password" class="form-control">
+                <label for="password">Passwort</label>
+                <input type="password" id="password" name="password" class="form-control" autocomplete="new-password">
             </div>
             <div class="form-group">
-                <label>Passwort bestätigen</label>
-                <input type="password" name="confirm_password" class="form-control">
+                <label for="confirm_password">Passwort bestätigen</label>
+                <input type="password" id="confirm_password" name="confirm_password" class="form-control" autocomplete="new-password">
             </div>
             <div class="form-group">
                 <input type="submit" class="btn btn-primary" value="Registrieren">

@@ -1,3 +1,62 @@
+<?php
+session_start();
+
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+$errors = [];
+
+include '../assets/configs/config.php';
+
+// Überprüfen, ob der Benutzer bereits eingeloggt ist, falls ja, weiterleiten
+if(isset($_SESSION['loggedin'])) {
+    header('Location: index.php');
+    exit;
+}
+
+// Überprüfen, ob das Formular gesendet wurde
+if($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Benutzeranmeldeinformationen abrufen
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    // SQL-Abfrage vorbereiten, um Benutzerdaten aus der Datenbank zu überprüfen
+    $sql = "SELECT * FROM users WHERE username = ?";
+    
+    // SQL-Abfrage vorbereiten
+    $stmt = $db->prepare($sql);
+    
+    // Parameter binden
+    $stmt->bind_param('s', $username);
+    
+    // SQL-Abfrage ausführen
+    $stmt->execute();
+    
+    // Ergebnis abrufen
+    $result = $stmt->get_result();
+
+    // Überprüfen, ob ein Benutzer mit den angegebenen Anmeldeinformationen gefunden wurde
+    if ($result->num_rows == 1) {
+        $user = $result->fetch_assoc();
+        if (password_verify($password, $user['password'])) {
+            // Benutzer erfolgreich eingeloggt, Session-Variable setzen
+            $_SESSION['loggedin'] = true;
+            $_SESSION['username'] = $username;
+            
+            // Weiterleitung zur Startseite mit Erfolgsmeldung
+            header('Location: login.php?success=1');
+            exit;
+        } else {
+            // Anmeldeinformationen sind ungültig, Fehlermeldung anzeigen
+            $error = "Ungültiges Passwort";
+        }
+    } else {
+        // Anmeldeinformationen sind ungültig, Fehlermeldung anzeigen
+        $error = "Ungültiger Benutzername";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
