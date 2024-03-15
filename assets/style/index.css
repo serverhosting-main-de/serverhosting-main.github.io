@@ -45,11 +45,16 @@ body {
   
   .main-image {
     width: 100%;
-    height: 150px; /* Höhe des Bildes auf 150px setzen */
-    object-fit: cover; /* Bild so skalieren, dass es den gesamten Bereich abdeckt */
+    height: 150px;
+    object-fit: cover;
   }
   
-  .content {
+  .empty-block {
+    height: 100px; /* Höhe des leeren Blocks festlegen */
+  }
+  
+  .filled-block {
+    background-color: #f0f0f0; /* Hintergrundfarbe des gefüllten Blocks */
     padding: 20px;
   }
   
