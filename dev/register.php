@@ -2,6 +2,9 @@
 // Inkludieren der Konfigurationsdatei für die Datenbankverbindung
 include '../assets/configs/config.php';
 
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 // Initialisierung der Variablen für Fehlermeldungen
 $errors = [];
 
