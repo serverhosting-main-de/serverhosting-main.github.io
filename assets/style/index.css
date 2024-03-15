@@ -5,11 +5,22 @@ body {
     color: #000;
     margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    text-align: center;
+}
+
+.navbar {
+    background-color: #333; /* Hintergrundfarbe der Navbar */
+    padding: 10px; /* Innenabstand der Navbar */
+    margin-bottom: 20px; /* Abstand unterhalb der Navbar */
+}
+
+.nav-item {
+    display: inline-block; /* Elemente nebeneinander anordnen */
+    margin-right: 10px; /* Abstand zwischen den Elementen */
+}
+
+.nav-link {
+    color: #fff; /* Farbe der Links */
+    text-decoration: none; /* Keine Unterstreichung */
 }
 
 /* Dark mode */
@@ -19,8 +30,11 @@ body {
         color: #fff;
     }
 
-    .btn {
-        background-color: #4CAF50;
-        color: white;
+    .navbar {
+        background-color: #444; /* Hintergrundfarbe der Navbar im Dark Mode */
+    }
+
+    .nav-link {
+        color: #fff; /* Farbe der Links im Dark Mode */
     }
 }
