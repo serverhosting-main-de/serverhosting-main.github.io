@@ -1,3 +1,52 @@
+<?php
+session_start();
+
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+$errors = [];
+
+include '../assets/configs/config.php';
+
+// Überprüfen, ob das Registrierungsformular abgeschickt wurde
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Überprüfen und Validieren der Eingaben
+    $username = $_POST['username'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $confirm_password = $_POST['confirm_password'];
+
+    // Überprüfen, ob Passwort und Bestätigung übereinstimmen
+    if ($password != $confirm_password) {
+        $errors[] = "Die Passwörter stimmen nicht überein.";
+    }
+
+    // Wenn keine Fehler aufgetreten sind, Benutzer zur Datenbank hinzufügen
+    if (empty($errors)) {
+        // Passwort hashen, bevor es in die Datenbank gespeichert wird
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+        // SQL-Abfrage zum Einfügen des Benutzers in die Datenbank
+        $sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+
+        // SQL-Abfrage vorbereiten
+        $stmt = $db->prepare($sql);
+        
+        // Parameter binden
+        $stmt->bind_param('sss', $username, $email, $hashed_password);
+        
+        // SQL-Abfrage ausführen
+        if ($stmt->execute()) {
+            // Weiterleitung zur Login-Seite mit Erfolgsmeldung
+            header('Location: login.php?success=1');
+            exit;
+        } else {
+            $errors[] = "Fehler beim Hinzufügen des Benutzers zur Datenbank: " . $stmt->error;
+        }
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,29 +55,10 @@
     <title>Registrieren</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="../assets/style/login_register.css">
-    <style>
-        .popup {
-            display: none;
-            position: fixed;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            padding: 20px;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            z-index: 9999;
-        }
-    </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Registrieren</h2>
-        <!-- Hier wird die Popup-Nachricht angezeigt -->
-        <div id="successPopup" class="popup alert alert-success">
-            Registrierung erfolgreich.
-        </div>
+    <div class="container login-container">
+        <h2 class="login-heading">Registrieren</h2>
         <?php if (!empty($errors)) : ?>
             <div class="alert alert-danger">
                 <?php foreach ($errors as $error) : ?>
@@ -36,7 +66,7 @@
                 <?php endforeach; ?>
             </div>
         <?php endif; ?>
-        <form action="register.php" method="post">
+        <form class="login-form" action="register.php" method="post">
             <div class="form-group">
                 <label for="username">Benutzername</label>
                 <input type="text" id="username" name="username" class="form-control">
@@ -47,38 +77,23 @@
             </div>
             <div class="form-group">
                 <label for="password">Passwort</label>
-                <input type="password" id="password" name="password" class="form-control" autocomplete="new-password">
+                <input type="password" id="password" name="password" class="form-control">
             </div>
             <div class="form-group">
                 <label for="confirm_password">Passwort bestätigen</label>
-                <input type="password" id="confirm_password" name="confirm_password" class="form-control" autocomplete="new-password">
+                <input type="password" id="confirm_password" name="confirm_password" class="form-control">
             </div>
             <div class="form-group">
-                <input type="submit" class="btn btn-primary" value="Registrieren">
+                <button type="submit" class="btn btn-primary">Registrieren</button>
             </div>
-            <p>Sie haben bereits ein Konto? <a href="login.php">Hier einloggen</a>.</p>
+            <div class="register-link">
+                <p>Sie haben bereits ein Konto? <a href="login.php">Hier einloggen</a>.</p>
+            </div>
         </form>
     </div>
-
-    <script>
-        // JavaScript, um das Popup anzuzeigen
-        document.addEventListener("DOMContentLoaded", function() {
-            // Überprüfen, ob die URL-Parameter die Erfolgsmeldung enthalten
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.has('success')) {
-                const successPopup = document.getElementById('successPopup');
-                successPopup.style.display = 'block';
-                // Automatisches Ausblenden des Popups nach 3 Sekunden
-                setTimeout(function() {
-                    successPopup.style.display = 'none';
-                }, 3000);
-            }
-        });
-    </script>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="../assets/script/index.js"></script>
 </body>
 </html>
