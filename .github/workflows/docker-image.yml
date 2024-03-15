@@ -1,0 +1,23 @@
+name: Deploy Website to Server
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "checkout"
+        uses: actions/checkout@v3
+      - name: "upload"
+        uses: Dylan700/sftp-upload-action@latest
+        with:
+          server: 45.89.124.250
+          username: root
+          password: ${{secrets.SERVER_PASSWORD}}
+          port: 22
+          uploads: |
+            ./ => /var/www/html
+          ignore: |
+            *.git
+            */**/*git*
