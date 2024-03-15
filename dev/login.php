@@ -14,6 +14,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
+    // Hier können Sie Debugging-Informationen ausgeben
+    echo "Benutzername: " . $username . "<br>";
+    echo "Passwort: " . $password . "<br>";
+
     // SQL-Abfrage vorbereiten, um Benutzerdaten aus der Datenbank zu überprüfen
     $sql = "SELECT * FROM users WHERE username = ? AND password = ?";
     
