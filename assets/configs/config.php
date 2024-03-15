@@ -1,6 +1,6 @@
 <?php
 // Datenbankverbindungsinformationen
-$servername = "localhost"; // Hostname des Datenbankservers
+$servername = "45.89.124.250"; // Hostname des Datenbankservers
 $username = "root"; // Benutzername der Datenbank
 $password = "Fkzx9p6g"; // Passwort der Datenbank
 $database = "serverhosting_main"; // Name der Datenbank
