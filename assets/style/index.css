@@ -45,8 +45,10 @@ body {
   
   .main-image {
     width: 100%;
+    height: auto; /* Höhe automatisch anpassen, um das Seitenverhältnis beizubehalten */
     display: block;
   }
+  
   
   .info-text {
     position: absolute;
