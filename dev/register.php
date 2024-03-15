@@ -21,27 +21,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errors[] = "Die Passwörter stimmen nicht überein.";
     }
 
+    // Überprüfen, ob die E-Mail-Adresse bereits verwendet wird
+    $sql_email_check = "SELECT * FROM users WHERE email = ?";
+    $stmt_email_check = $db->prepare($sql_email_check);
+    $stmt_email_check->bind_param('s', $email);
+    $stmt_email_check->execute();
+    $result_email_check = $stmt_email_check->get_result();
+
+    if ($result_email_check->num_rows > 0) {
+        $errors[] = "Die angegebene E-Mail-Adresse wird bereits verwendet.";
+    }
+
+    // Überprüfen, ob der Benutzername bereits existiert
+    $sql_username_check = "SELECT * FROM users WHERE username = ?";
+    $stmt_username_check = $db->prepare($sql_username_check);
+    $stmt_username_check->bind_param('s', $username);
+    $stmt_username_check->execute();
+    $result_username_check = $stmt_username_check->get_result();
+
+    if ($result_username_check->num_rows > 0) {
+        $errors[] = "Der angegebene Benutzername wird bereits verwendet.";
+    }
+
     // Wenn keine Fehler aufgetreten sind, Benutzer zur Datenbank hinzufügen
     if (empty($errors)) {
         // Passwort hashen, bevor es in die Datenbank gespeichert wird
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
         // SQL-Abfrage zum Einfügen des Benutzers in die Datenbank
-        $sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+        $sql_insert_user = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+        $stmt_insert_user = $db->prepare($sql_insert_user);
+        $stmt_insert_user->bind_param('sss', $username, $email, $hashed_password);
 
-        // SQL-Abfrage vorbereiten
-        $stmt = $db->prepare($sql);
-        
-        // Parameter binden
-        $stmt->bind_param('sss', $username, $email, $hashed_password);
-        
         // SQL-Abfrage ausführen
-        if ($stmt->execute()) {
+        if ($stmt_insert_user->execute()) {
             // Weiterleitung zur Login-Seite mit Erfolgsmeldung
             header('Location: login.php?success=1');
             exit;
         } else {
-            $errors[] = "Fehler beim Hinzufügen des Benutzers zur Datenbank: " . $stmt->error;
+            $errors[] = "Fehler beim Hinzufügen des Benutzers zur Datenbank: " . $stmt_insert_user->error;
         }
     }
 }
@@ -55,6 +73,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Registrieren</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="../assets/style/login_register.css">
+    <style>
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 9999;
+        }
+    </style>
 </head>
 <body>
     <div class="container login-container">
@@ -69,19 +102,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <form class="login-form" action="register.php" method="post">
             <div class="form-group">
                 <label for="username">Benutzername</label>
-                <input type="text" id="username" name="username" class="form-control">
+                <input type="text" id="username" name="username" class="form-control" required>
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" id="email" name="email" class="form-control">
+                <input type="email" id="email" name="email" class="form-control" required>
             </div>
             <div class="form-group">
                 <label for="password">Passwort</label>
-                <input type="password" id="password" name="password" class="form-control">
+                <input type="password" id="password" name="password" class="form-control" required>
             </div>
             <div class="form-group">
                 <label for="confirm_password">Passwort bestätigen</label>
-                <input type="password" id="confirm_password" name="confirm_password" class="form-control">
+                <input type="password" id="confirm_password" name="confirm_password" class="form-control" required>
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Registrieren</button>
@@ -91,6 +124,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </form>
     </div>
+
+    <div id="errorPopup" class="popup alert alert-danger"></div>
+
+    <script>
+        // JavaScript, um Fehlermeldungen als Popup anzuzeigen
+        document.addEventListener("DOMContentLoaded", function() {
+            <?php if (!empty($errors)) : ?>
+                const errorPopup = document.getElementById('errorPopup');
+                errorPopup.innerHTML = '<?php echo implode('<br>', $errors); ?>';
+                errorPopup.style.display = 'block';
+                // Automatisches Ausblenden des Popups nach 5 Sekunden
+                setTimeout(function() {
+                    errorPopup.style.display = 'none';
+                }, 5000);
+            <?php endif; ?>
+        });
+    </script>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
