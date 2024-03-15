@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'config.php';
+include '../assets/configs/config.php';
 
 // Überprüfen, ob der Benutzer bereits eingeloggt ist, falls ja, weiterleiten
 if(isset($_SESSION['loggedin'])) {

@@ -1,6 +1,6 @@
 <?php
 // Inkludieren der Konfigurationsdatei für die Datenbankverbindung
-include 'config.php';
+include '../assets/configs/config.php';
 
 // Initialisierung der Variablen für Fehlermeldungen
 $errors = [];
