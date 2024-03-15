@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrieren</title>
-    <link rel="stylesheet" href="login_register.css">
+    <link rel="stylesheet" href="../assets/style/login_register.css">
 </head>
 <body>
 
