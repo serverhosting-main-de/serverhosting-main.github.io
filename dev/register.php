@@ -73,21 +73,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Registrieren</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="../assets/style/login_register.css">
-    <style>
-        .popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #fff;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            z-index: 9999;
-        }
-    </style>
 </head>
 <body>
     <div class="container login-container">
@@ -124,23 +109,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </form>
     </div>
-
-    <div id="errorPopup" class="popup alert alert-danger"></div>
-
-    <script>
-        // JavaScript, um Fehlermeldungen als Popup anzuzeigen
-        document.addEventListener("DOMContentLoaded", function() {
-            <?php if (!empty($errors)) : ?>
-                const errorPopup = document.getElementById('errorPopup');
-                errorPopup.innerHTML = '<?php echo implode('<br>', $errors); ?>';
-                errorPopup.style.display = 'block';
-                // Automatisches Ausblenden des Popups nach 5 Sekunden
-                setTimeout(function() {
-                    errorPopup.style.display = 'none';
-                }, 5000);
-            <?php endif; ?>
-        });
-    </script>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
