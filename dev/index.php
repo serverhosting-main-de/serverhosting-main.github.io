@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+// Überprüfen, ob der Benutzer nicht eingeloggt ist, dann weiterleiten
+if(!isset($_SESSION['loggedin'])) {
+    header('Location: login.php');
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -41,19 +51,24 @@
             <li class="nav-item">
               <a class="nav-link" href="#">Contact</a>
             </li>
+            <?php if(isset($_SESSION['loggedin'])) { ?>
+            <li class="nav-item">
+              <a class="nav-link" href="logout.php">Logout</a>
+            </li>
+            <?php } else { ?>
+            <li class="nav-item">
+              <a class="nav-link" href="login.php">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="register.php">Register</a>
+            </li>
+            <?php } ?>
           </ul>
         </div>
       </div>
     </nav>
 
     <div class="container mt-5">
-      <h1>Testseite</h1>
-      <p>
-        Dies ist eine Test- und Entwicklungsumgebung. Bitte beachten Sie, dass
-        Änderungen hier keine Auswirkungen auf die Live-Website haben.
-      </p>
-      <a href="../index.html" class="btn btn-primary">Zurück zur Startseite</a>
-
       <div class="row mt-4">
         <div class="col-md-12">
           <div class="image-container">
