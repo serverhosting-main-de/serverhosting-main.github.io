@@ -24,13 +24,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
         // SQL-Abfrage zum Einfügen des Benutzers in die Datenbank
-        $sql = "INSERT INTO users (username, email, password) VALUES ('$username', '$email', '$hashed_password')";
+        $sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
 
-        // Ausführen der SQL-Abfrage
-        if ($conn->query($sql) === TRUE) {
+        // SQL-Abfrage vorbereiten
+        $stmt = $db->prepare($sql);
+        
+        // Parameter binden
+        $stmt->bind_param('sss', $username, $email, $hashed_password);
+        
+        // SQL-Abfrage ausführen
+        if ($stmt->execute()) {
             echo "Registrierung erfolgreich.";
         } else {
-            echo "Fehler beim Hinzufügen des Benutzers zur Datenbank: " . $conn->error;
+            echo "Fehler beim Hinzufügen des Benutzers zur Datenbank: " . $stmt->error;
         }
     }
 }
@@ -38,7 +44,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -46,17 +51,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="../assets/style/login_register.css">
 </head>
-
 <body>
-
     <div class="container">
         <h2>Registrieren</h2>
         <?php if (!empty($errors)) : ?>
             <div class="alert alert-danger">
                 <?php foreach ($errors as $error) : ?>
-                    <p>
-                        <?php echo $error; ?>
-                    </p>
+                    <p><?php echo $error; ?></p>
                 <?php endforeach; ?>
             </div>
         <?php endif; ?>
@@ -89,5 +90,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="../assets/script/index.js"></script>
 </body>
-
 </html>

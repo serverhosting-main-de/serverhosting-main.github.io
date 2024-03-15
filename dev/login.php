@@ -1,5 +1,8 @@
 <?php
 session_start();
+
+$errors = [];
+
 include '../assets/configs/config.php';
 
 // Überprüfen, ob der Benutzer bereits eingeloggt ist, falls ja, weiterleiten
@@ -14,18 +17,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    // Hier können Sie Debugging-Informationen ausgeben
-    echo "Benutzername: " . $username . "<br>";
-    echo "Passwort: " . $password . "<br>";
-
     // SQL-Abfrage vorbereiten, um Benutzerdaten aus der Datenbank zu überprüfen
-    $sql = "SELECT * FROM users WHERE username = ? AND password = ?";
+    $sql = "SELECT * FROM users WHERE username = ?";
     
     // SQL-Abfrage vorbereiten
     $stmt = $db->prepare($sql);
     
     // Parameter binden
-    $stmt->bind_param('ss', $username, $password);
+    $stmt->bind_param('s', $username);
     
     // SQL-Abfrage ausführen
     $stmt->execute();
@@ -35,16 +34,22 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Überprüfen, ob ein Benutzer mit den angegebenen Anmeldeinformationen gefunden wurde
     if ($result->num_rows == 1) {
-        // Benutzer erfolgreich eingeloggt, Session-Variable setzen
-        $_SESSION['loggedin'] = true;
-        $_SESSION['username'] = $username;
-        
-        // Weiterleitung zur Startseite
-        header('Location: index.php');
-        exit;
+        $user = $result->fetch_assoc();
+        if (password_verify($password, $user['password'])) {
+            // Benutzer erfolgreich eingeloggt, Session-Variable setzen
+            $_SESSION['loggedin'] = true;
+            $_SESSION['username'] = $username;
+            
+            // Weiterleitung zur Startseite
+            header('Location: index.php');
+            exit;
+        } else {
+            // Anmeldeinformationen sind ungültig, Fehlermeldung anzeigen
+            $error = "Ungültiges Passwort";
+        }
     } else {
         // Anmeldeinformationen sind ungültig, Fehlermeldung anzeigen
-        $error = "Ungültiger Benutzername oder Passwort";
+        $error = "Ungültiger Benutzername";
     }
 }
 ?>
@@ -55,10 +60,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="../assets/style/login_register.css">
 </head>
 <body>
