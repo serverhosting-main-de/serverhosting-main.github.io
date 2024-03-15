@@ -1,11 +1,5 @@
 <?php
 session_start();
-
-// Überprüfen, ob der Benutzer nicht eingeloggt ist, dann weiterleiten
-if(!isset($_SESSION['loggedin'])) {
-    header('Location: login.php');
-    exit;
-}
 ?>
 
 <!DOCTYPE html>
