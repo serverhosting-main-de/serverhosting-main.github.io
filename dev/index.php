@@ -39,7 +39,7 @@ session_start();
               <a class="nav-link" href="logout.php">Logout</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i></a>
+              <a class="nav-link" href="cart.php"><i class="fas fa-shopping-cart"></i></a>
             </li>
             <?php } else { ?>
             <li class="nav-item">
@@ -55,40 +55,24 @@ session_start();
     </nav>
 
     <div class="container mt-5">
+      <h2>Produkte</h2>
       <div class="row mt-4">
-        <div class="col-md-12">
-          <div class="image-container">
-            <img
-              src="../assets/img/image_header.jpg"
-              alt="Bildbeschreibung"
-              class="img-fluid"
-            />
-            <div class="info-text">
-              Serverhosting-Main | Startseite<br /><br />
-              Wir sind ein prepaid-basierter Hosting-Anbieter, vertreten im NTT
-              Rechenzentrum Frankfurt am Main mit modernen AMD EPYC KVM-Servern
-              und im Skylink Rechenzentrum in Eygelshoven mit preiswerten Intel
-              Xeon und leistungsstarken AMD Ryzen KVM-Servern.
+        <div class="col-md-3">
+          <div class="card">
+            <img src="product1.jpg" class="card-img-top" alt="Product 1">
+            <div class="card-body">
+              <h5 class="card-title">Produkt 1</h5>
+              <p class="card-text">$10.99</p>
+              <a href="add_to_cart.php?id=1" class="btn btn-primary">In den Warenkorb</a>
             </div>
           </div>
         </div>
-      </div>
-
-      <div class="row mt-4">
-        <div class="col-md-6">
-          <div class="filled-block">
-            <p>Gefüllter Block mit Inhalt...</p>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="empty-block"></div>
-        </div>
+        <!-- Weitere Produkte hier -->
       </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="../assets/script/index.js"></script>
 </body>
 </html>
