@@ -2,33 +2,36 @@
 session_start();
 include '../assets/configs/config.php'; // Stellen Sie sicher, dass die Verbindung zur Datenbank hergestellt ist
 
-// Überprüfen, ob der Benutzer eingeloggt ist
+// Überprüfen, ob ein Benutzer eingeloggt ist
 if (!isset($_SESSION['loggedin'])) {
-    // Benutzer ist nicht eingeloggt, daher Umleitung zur Login-Seite
-    header("Location: login.php");
-    exit; // Beenden Sie das Skript, um sicherzustellen, dass nichts weiter ausgeführt wird
+    // Weiterleitung zur Login-Seite
+    header('Location: login.php');
+    exit;
 }
 
 // Überprüfen, ob eine Produkt-ID übergeben wurde
 if(isset($_GET['id'])) {
-    // Produkt-ID aus der GET-Anfrage erhalten
     $product_id = $_GET['id'];
-    
-    // Fügen Sie die Produkt-ID zum Warenkorb in der Benutzersitzung hinzu
-    if(isset($_SESSION['cart'])) {
-        // Wenn bereits Produkte im Warenkorb sind, fügen Sie die neue Produkt-ID hinzu
-        $_SESSION['cart'][] = $product_id;
+
+    // Überprüfen, ob das Produkt bereits im Warenkorb ist
+    if(isset($_SESSION['cart'][$product_id])) {
+        $_SESSION['cart'][$product_id]['quantity']++;
     } else {
-        // Wenn der Warenkorb noch leer ist, initialisieren Sie ihn mit der Produkt-ID
-        $_SESSION['cart'] = array($product_id);
+        // Produkt zum Warenkorb hinzufügen
+        $sql = "SELECT * FROM products WHERE id=$product_id";
+        $result = $db->query($sql);
+        if($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $_SESSION['cart'][$product_id] = array(
+                "quantity" => 1,
+                "price" => $row['price']
+            );
+        } else {
+            $message = "Produkt nicht gefunden";
+        }
     }
-    
-    // Optional: Umleitung zur Produkte-Seite oder einer anderen Seite nach dem Hinzufügen zum Warenkorb
-    header("Location: products.php");
-    exit; // Beenden Sie das Skript, um sicherzustellen, dass nichts weiter ausgeführt wird
-} else {
-    // Wenn keine Produkt-ID übergeben wurde, leiten Sie zur Produkte-Seite weiter
-    header("Location: products.php");
-    exit; // Beenden Sie das Skript, um sicherzustellen, dass nichts weiter ausgeführt wird
 }
+
+// Weiterleitung zur Produkte-Seite
+header('Location: products.php');
 ?>

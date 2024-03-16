@@ -15,10 +15,16 @@ $result = $db->query($sql);
     <title>Produkte</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <!-- Link zur CSS-Datei für die Card-Boxen -->
+    <link rel="stylesheet" href="../assets/style/index.css" />
     <style>
         /* Dark mode */
         body {
             background-color: #1e1e1e;
+            color: #fff;
+        }
+        .card {
+            background-color: #333;
             color: #fff;
         }
     </style>
@@ -50,14 +56,7 @@ $result = $db->query($sql);
               <a class="nav-link" href="logout.php">Logout</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="cart.php"><i class="fas fa-shopping-cart"></i>
-                <?php
-                // Anzahl der Produkte im Warenkorb anzeigen
-                if(isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
-                    echo '<span class="badge badge-light">' . count($_SESSION['cart']) . '</span>';
-                }
-                ?>
-              </a>
+              <a class="nav-link" href="cart.php"><i class="fas fa-shopping-cart"></i> <?php echo isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0; ?></a>
             </li>
             <?php } else { ?>
             <li class="nav-item">
@@ -86,11 +85,7 @@ $result = $db->query($sql);
                                 <p class="card-text">Cores: <?php echo $row['cores']; ?></p>
                                 <p class="card-text">IPs: <?php echo $row['ips']; ?></p>
                                 <p class="card-text">Preis: $<?php echo $row['price']; ?></p>
-                                <?php if(isset($_SESSION['loggedin'])) { ?>
                                 <a href="add_to_cart.php?id=<?php echo $row['id']; ?>" class="btn btn-primary">In den Warenkorb</a>
-                                <?php } else { ?>
-                                <p class="text-danger">Bitte einloggen, um das Produkt zum Warenkorb hinzuzufügen.</p>
-                                <?php } ?>
                             </div>
                         </div>
                     </div>
