@@ -20,7 +20,7 @@ $result = $db->query($sql);
         .navbar {
             margin-bottom: 20px;
         }
-        .container {
+        .top-40 {
             margin-top: 40px;
         }
     </style>
@@ -66,7 +66,7 @@ $result = $db->query($sql);
         </div>
       </div>
     </nav>
-    <div class="container mt-7"> <!-- Anpassung des Margin-Werts -->
+    <div class="container top-40"> <!-- Anpassung des Margin-Werts -->
         <h2>Produkte</h2>
         <div class="row mt-4">
             <?php
