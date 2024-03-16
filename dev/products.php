@@ -1,10 +1,15 @@
 <?php
 session_start();
+session_start();
 include '../assets/configs/config.php'; // Stellen Sie sicher, dass die Verbindung zur Datenbank hergestellt ist
 
-// SQL-Abfrage, um alle Produkte aus der Datenbank abzurufen
-$sql = "SELECT * FROM products";
-$result = $db->query($sql);
+// Berechnen Sie die Gesamtmenge der Produkte im Warenkorb
+$total_items = 0;
+if (!empty($_SESSION['cart'])) {
+    foreach ($_SESSION['cart'] as $product_id => $product) {
+        $total_items += $product['quantity'];
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -56,7 +61,7 @@ $result = $db->query($sql);
               <a class="nav-link" href="logout.php">Logout</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="cart.php"><i class="fas fa-shopping-cart"></i> <?php echo isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0; ?></a>
+              <a class="nav-link" href="cart.php"><i class="fas fa-shopping-cart"></i> <?php echo isset($_SESSION['cart']) ? $total_items : 0; ?></a>
             </li>
             <?php } else { ?>
             <li class="nav-item">
