@@ -84,7 +84,7 @@ $result = $db->query($sql);
                                 <p class="card-text">RAM: <?php echo $row['ram']; ?> MB</p>
                                 <p class="card-text">Cores: <?php echo $row['cores']; ?></p>
                                 <p class="card-text">IPs: <?php echo $row['ips']; ?></p>
-                                <p class="card-text">Preis: $<?php echo $row['price']; ?></p>
+                                <p class="card-text">Preis: <?php echo $row['price']; ?>€</p>
                                 <a href="add_to_cart.php?id=<?php echo $row['id']; ?>" class="btn btn-primary">In den Warenkorb</a>
                             </div>
                         </div>
