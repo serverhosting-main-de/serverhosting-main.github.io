@@ -1,5 +1,10 @@
 <?php
 session_start();
+include '../assets/configs/config.php'; // Stellen Sie sicher, dass die Verbindung zur Datenbank hergestellt ist
+
+// SQL-Abfrage, um alle Produkte aus der Datenbank abzurufen
+$sql = "SELECT * FROM products";
+$result = $conn->query($sql);
 ?>
 
 <!DOCTYPE html>
@@ -7,7 +12,7 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Serverhosting-Main | Startseite</title>
+    <title>Produkte</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="../assets/style/index.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
@@ -53,26 +58,33 @@ session_start();
         </div>
       </div>
     </nav>
-
     <div class="container mt-5">
-      <div class="row mt-4">
-        <div class="col-md-12">
-          <div class="image-container">
-            <img
-              src="../assets/img/image_header.jpg"
-              alt="Bildbeschreibung"
-              class="img-fluid"
-            />
-            <div class="info-text">
-              Serverhosting-Main | Startseite<br /><br />
-              Wir sind ein prepaid-basierter Hosting-Anbieter, vertreten im NTT
-              Rechenzentrum Frankfurt am Main mit modernen AMD EPYC KVM-Servern
-              und im Skylink Rechenzentrum in Eygelshoven mit preiswerten Intel
-              Xeon und leistungsstarken AMD Ryzen KVM-Servern.
-            </div>
-          </div>
+        <h2>Produkte</h2>
+        <div class="row mt-4">
+            <?php
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    ?>
+                    <div class="col-md-4">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title"><?php echo $row['name']; ?></h5>
+                                <p class="card-text">RAM: <?php echo $row['ram']; ?> MB</p>
+                                <p class="card-text">Cores: <?php echo $row['cores']; ?></p>
+                                <p class="card-text">IPs: <?php echo $row['ips']; ?></p>
+                                <p class="card-text">Preis: $<?php echo $row['price']; ?></p>
+                                <a href="add_to_cart.php?id=<?php echo $row['id']; ?>" class="btn btn-primary">In den Warenkorb</a>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                }
+            } else {
+                echo "Keine Produkte gefunden.";
+            }
+            ?>
         </div>
-      </div>
+    </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
