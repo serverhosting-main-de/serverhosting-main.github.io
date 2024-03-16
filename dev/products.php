@@ -20,6 +20,9 @@ $result = $db->query($sql);
         .navbar {
             margin-bottom: 20px;
         }
+        .container {
+            margin-top: 40px;
+        }
     </style>
 </head>
 <body>
