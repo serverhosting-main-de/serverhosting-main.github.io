@@ -14,16 +14,7 @@ $result = $db->query($sql);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Produkte</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="../assets/style/index.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-    <style>
-        .navbar {
-            margin-bottom: 20px;
-        }
-        .top-40 {
-            margin-top: 40px;
-        }
-    </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -66,7 +57,7 @@ $result = $db->query($sql);
         </div>
       </div>
     </nav>
-    <div class="container top-40"> <!-- Anpassung des Margin-Werts -->
+    <div class="container mt-5">
         <h2>Produkte</h2>
         <div class="row mt-4">
             <?php
