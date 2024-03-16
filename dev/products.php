@@ -1,3 +1,12 @@
+<?php
+session_start();
+include '../assets/configs/config.php'; // Stellen Sie sicher, dass die Verbindung zur Datenbank hergestellt ist
+
+// SQL-Abfrage, um alle Produkte aus der Datenbank abzurufen
+$sql = "SELECT * FROM products";
+$result = $db->query($sql);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +18,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     <style>
         .navbar {
-            margin-bottom: 20px; /* Erhöhen Sie den Abstand zwischen Navbar und Inhalt */
+            margin-bottom: 20px !important; /* Erhöhen Sie den Abstand zwischen Navbar und Inhalt */
         }
     </style>
 </head>
@@ -54,7 +63,7 @@
         </div>
       </div>
     </nav>
-    <div class="container mt-5"> <!-- Erhöhen Sie den Abstand hier -->
+    <div class="container mt-10"> <!-- Erhöhen Sie den Abstand hier -->
         <h2>Produkte</h2>
         <div class="row mt-4">
             <?php
