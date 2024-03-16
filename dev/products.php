@@ -1,6 +1,5 @@
 <?php
 session_start();
-session_start();
 include '../assets/configs/config.php'; // Stellen Sie sicher, dass die Verbindung zur Datenbank hergestellt ist
 
 // Berechnen Sie die Gesamtmenge der Produkte im Warenkorb
@@ -10,6 +9,10 @@ if (!empty($_SESSION['cart'])) {
         $total_items += $product['quantity'];
     }
 }
+
+// SQL-Abfrage, um alle Produkte aus der Datenbank abzurufen
+$sql = "SELECT * FROM products";
+$result = $db->query($sql);
 ?>
 
 <!DOCTYPE html>
@@ -20,8 +23,6 @@ if (!empty($_SESSION['cart'])) {
     <title>Produkte</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-    <!-- Link zur CSS-Datei für die Card-Boxen -->
-    <link rel="stylesheet" href="../assets/style/index.css" />
     <style>
         /* Dark mode */
         body {
