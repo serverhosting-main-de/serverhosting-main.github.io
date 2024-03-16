@@ -18,7 +18,7 @@ $result = $db->query($sql);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     <style>
         .navbar {
-            margin-bottom: 20px !important; /* Erhöhen Sie den Abstand zwischen Navbar und Inhalt */
+            margin-bottom: 20px;
         }
     </style>
 </head>
@@ -63,7 +63,7 @@ $result = $db->query($sql);
         </div>
       </div>
     </nav>
-    <div class="container mt-10"> <!-- Erhöhen Sie den Abstand hier -->
+    <div class="container mt-7"> <!-- Anpassung des Margin-Werts -->
         <h2>Produkte</h2>
         <div class="row mt-4">
             <?php
