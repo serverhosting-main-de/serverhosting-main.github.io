@@ -21,6 +21,13 @@ $result = $db->query($sql);
             background-color: #1e1e1e;
             color: #fff;
         }
+        .card {
+            background-color: #2e2e2e;
+            color: #fff;
+        }
+        .mt-4r {
+            margin-top: 4rem;
+        }
     </style>
 </head>
 <body>
@@ -64,7 +71,7 @@ $result = $db->query($sql);
         </div>
       </div>
     </nav>
-    <div class="container mt-5">
+    <div class="container mt-4r">
         <h2 class="text-center mb-4">Produkte</h2>
         <div class="row">
             <?php
