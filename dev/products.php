@@ -4,7 +4,7 @@ include '../assets/configs/config.php'; // Stellen Sie sicher, dass die Verbindu
 
 // SQL-Abfrage, um alle Produkte aus der Datenbank abzurufen
 $sql = "SELECT * FROM products";
-$result = $conn->query($sql);
+$result = $db->query($sql);
 ?>
 
 <!DOCTYPE html>
