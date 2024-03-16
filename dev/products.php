@@ -14,7 +14,15 @@ $result = $db->query($sql);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Produkte</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/style/index.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <style>
+        /* Dark mode */
+        body {
+            background-color: #1e1e1e;
+            color: #fff;
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -58,8 +66,8 @@ $result = $db->query($sql);
       </div>
     </nav>
     <div class="container mt-5">
-        <h2>Produkte</h2>
-        <div class="row mt-4">
+        <h2 class="text-center mb-4">Produkte</h2>
+        <div class="row">
             <?php
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
@@ -79,7 +87,7 @@ $result = $db->query($sql);
                     <?php
                 }
             } else {
-                echo "Keine Produkte gefunden.";
+                echo "<div class='col'><p>Keine Produkte gefunden.</p></div>";
             }
             ?>
         </div>
