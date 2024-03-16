@@ -21,6 +21,9 @@ $result = $db->query($sql);
             background-color: #1e1e1e;
             color: #fff;
         }
+        .mt-5 {
+            margin-top: 3rem; /* Anpassung der Margin-Top-Eigenschaft */
+        }
     </style>
 </head>
 <body>
