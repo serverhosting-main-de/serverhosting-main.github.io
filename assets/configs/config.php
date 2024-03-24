@@ -12,4 +12,3 @@ $db = new mysqli($servername, $username, $password, $database);
 if ($db->connect_error) {
     die("Verbindung zur Datenbank fehlgeschlagen: " . $db->connect_error);
 }
-?>
