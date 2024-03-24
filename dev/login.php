@@ -56,7 +56,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -64,31 +63,32 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/style/login_and_register.css" /> <!-- Verweis auf Ihre CSS-Datei -->
 </head>
 <body>
-    <div class="container login-container">
-        <h2 class="login-heading">Login</h2>
-        <?php if(isset($error)) { ?>
-            <p class="error"><?php echo $error; ?></p>
-        <?php } ?>
-        <form class="login-form" action="login.php" method="post">
-            <div class="form-group">
-                <label for="username">Benutzername:</label>
-                <input type="text" id="username" name="username" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Passwort:</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Login</button>
-        </form>
-        <div class="register-link">
-            <p>Noch keinen Account? <a href="register.php">Registrieren</a></p>
+<div class="container login-container">
+    <h2 class="login-heading">Login</h2>
+    <?php if(isset($error)) { ?>
+        <p class="error"><?php echo $error; ?></p>
+    <?php } ?>
+    <form class="login-form" action="login.php" method="post">
+        <div class="form-group">
+            <input type="text" id="username" name="username" class="form-control" placeholder="Benutzername" required>
         </div>
+        <div class="form-group">
+            <input type="password" id="password" name="password" class="form-control" placeholder="Passwort" required>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block">Login</button> <!-- Verwendung von btn-block, um die Breite des Buttons anzupassen -->
+        </div>
+    </form>
+    <div class="register-link">
+        <p class="text-center">Noch keinen Account? <a href="register.php">Registrieren</a></p> <!-- Zentrierung des Links -->
     </div>
+</div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

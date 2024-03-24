@@ -64,54 +64,53 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrieren</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="../assets/style/login_register.css">
+    <link rel="stylesheet" href="../assets/style/login_and_register.css" /> <!-- Verweis auf Ihre CSS-Datei -->
 </head>
 <body>
-    <div class="container login-container">
-        <h2 class="login-heading">Registrieren</h2>
-        <?php if (!empty($errors)) : ?>
-            <div class="alert alert-danger">
-                <?php foreach ($errors as $error) : ?>
-                    <p><?php echo $error; ?></p>
-                <?php endforeach; ?>
-            </div>
-        <?php endif; ?>
-        <form class="login-form" action="register.php" method="post">
-            <div class="form-group">
-                <label for="username">Benutzername</label>
-                <input type="text" id="username" name="username" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Passwort</label>
-                <input type="password" id="password" name="password" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label for="confirm_password">Passwort bestätigen</label>
-                <input type="password" id="confirm_password" name="confirm_password" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">Registrieren</button>
-            </div>
-            <div class="register-link">
-                <p>Sie haben bereits ein Konto? <a href="login.php">Hier einloggen</a>.</p>
-            </div>
-        </form>
+<div class="container login-container">
+    <h2 class="login-heading">Registrieren</h2>
+    <?php if (!empty($errors)) : ?>
+        <div class="alert alert-danger text-center"> <!-- Hier fügen wir die Bootstrap-Klasse 'text-center' hinzu -->
+            <?php foreach ($errors as $error) : ?>
+                <p><?php echo $error; ?></p>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+    <form class="login-form" action="register.php" method="post">
+        <div class="form-group">
+            <label for="username">Benutzername</label>
+            <input type="text" id="username" name="username" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Passwort</label>
+            <input type="password" id="password" name="password" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="confirm_password">Passwort bestätigen</label>
+            <input type="password" id="confirm_password" name="confirm_password" class="form-control" required>
+        </div>
+        <div class="form-group text-center">
+            <button type="submit" class="btn btn-primary">Registrieren</button>
+        </div>
+    </form>
+    <div class="register-link text-center">
+        <p>Sie haben bereits ein Konto? <a href="login.php">Hier einloggen</a>.</p>
     </div>
+</div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
