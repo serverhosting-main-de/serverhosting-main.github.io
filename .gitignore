@@ -19,3 +19,6 @@ build/
 # Dependency lock files
 yarn.lock
 package-lock.json
+/.idea/htdocs.iml
+/.idea/modules.xml
+/.idea/*
